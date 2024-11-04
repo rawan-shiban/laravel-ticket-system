@@ -6,26 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 
 class TicketController extends Controller
 {
     //
-    function index()
+    public function index()
     {
         $tickets =Ticket::all();
         return response()->json(["msg"=>"data retrived successfully",
                                     "success"=>true,
                                     "data"=>["tickets"=>$tickets]]);      
     }
-    function show($id)
+    public function show($id)
     {
         $ticket = Ticket::find($id);
         return response()->json(["msg"=>"data retrived successfully",
                                 "success"=> true ,
                                 "data"=>$ticket]);
     }
-    function store(Request $request){
+    public function store(Request $request){
         try{
         $data = $request ->all();
         $ticket = new Ticket();
@@ -34,6 +35,7 @@ class TicketController extends Controller
         $ticket->deadline =$data ['deadline'];
         $ticket->status = $data ['status'];
         $ticket->assigned_user_id = $data ['assigned_user_id'];
+        $ticket->user_id = Auth::guard('api')-> user()->id;
         $ticket->save();
         return response()->json(["msg"=>"created successfully","success"=>true,"data"=>$ticket]);
     }
@@ -43,7 +45,7 @@ class TicketController extends Controller
     }
 
     }
-    function update(Request $request,$id){
+    public function update(Request $request,$id){
      try{
         $ticket = Ticket::find($id);
         $data = $request->all();
@@ -52,6 +54,7 @@ class TicketController extends Controller
         $ticket->status=$data['status'];
         $ticket->deadline=$data['deadline'];
         $ticket->assigned_user_id = $data['assigned_user_id'];
+  
         $ticket->save();
         return response()->json(["msg"=>"update successfully",
                                 "success"=>true,
@@ -67,7 +70,7 @@ class TicketController extends Controller
      }
 
     }
-    function destroy($id)
+   public function destroy($id)
     {
         try{
             $ticket = Ticket::find($id);

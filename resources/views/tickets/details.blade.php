@@ -8,14 +8,13 @@
 </head>  
 <body>      
     <div class="main">
-        <div class="content">
-            @if (Session::get('message'))
-            <div class="message">
-                <div class="message_text">{{Session::get("message")}}</div>
-        
-                </div>    
-            @endif  
-            
+          @if (Session::get('message'))
+        <div style="background:rgb(1, 134, 14);width:100%;height:3rem;">
+            <div style="color: antiquewhite; font-size:20px;">{{Session::get("message")}}</div>
+    
+            </div>    
+        @endif
+        <div class="content"> 
             <h1 class="title">Ticket ditels</h1>
       
             <table >

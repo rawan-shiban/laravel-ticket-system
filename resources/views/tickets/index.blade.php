@@ -15,12 +15,15 @@
     
             </div>    
         @endif
+
 <div class="main">  
     
     <h1 class="title">Tickets</h1>  
-    <div class="content"> 
-     
-        
+    <div class="content">
+         
+    <form method="post" action="{{route("auth.logout")}}">
+        @csrf<button type="submit">Logout</button>
+     </form>
         <div class="create">
             <a class="a a_c" href="{{route('tickets.create')}}">Ticket create</a>
         </div>  

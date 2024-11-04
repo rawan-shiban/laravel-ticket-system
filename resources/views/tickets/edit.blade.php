@@ -33,7 +33,7 @@
                 </div>
                 <div>
                 <label for="assigned_user_id">Assigend User</label>
-                <select name="assigned_user_id" id="assigned_user_id">
+                <select name="assigned_user_id" >
                     @foreach ($users as $user)
                     <option value="$user->id" {{$user->id == $ticket->assigned_user_id ? "selected" : ""}}> {{$user->name}}</option>
                     @endforeach

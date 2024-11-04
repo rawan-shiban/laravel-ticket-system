@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\Return_;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller       
 {
@@ -38,9 +39,11 @@ class TicketController extends Controller
 
       $ticket->title = $data['title'];
       $ticket->desc = $data['desc'];
-       $ticket->deadline=$data ['deadline'];
-      
-       $ticket->status =$data['status'];
+      $ticket->deadline=$data ['deadline'];
+      //$ticket->assigned_user_id=$data ['assigned_user_id'];
+      $ticket->status =$data['status'];
+      //$ticket->user_id=Auth::user()->id;
+      $ticket->user_id = $request -> user("web")->id;
       $ticket->save();
   
        return redirect("/tickets")->with("message","create successfully");
@@ -66,7 +69,7 @@ class TicketController extends Controller
       $ticket->title = $data['title'];
       $ticket->desc = $data['desc'];
       $ticket->deadline=$data ['deadline'];
-      $ticket->assigned_user_id = $data ['assigned_user_id'];
+      //$ticket->assigned_user_id = $data ['assigned_user_id'];
       $ticket->status =$data['status'];
       $ticket ->save();
       return redirect("/tickets/".$id)->with("message",'updated successfully');
